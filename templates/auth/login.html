@@ -1,0 +1,46 @@
+{% extends "auth_base.html" %}
+
+{% block content %}
+<div style="text-align: center; margin-bottom: 20px;">
+    <h1 style="font-size: 22px; font-weight: 600; margin-bottom: 4px;">Welcome Back</h1>
+    <p style="color: var(--muted-foreground); font-size: 14px;">Sign in to continue to your library.</p>
+</div>
+
+<form method="POST" style="display: flex; flex-direction: column; gap: 14px;">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+    <div>
+        <label>Email</label>
+        {{ form.email(placeholder="your@email.com", style="width: 100%; padding: 10px 14px; border: 1px solid var(--input); border-radius: var(--radius); background: var(--background); color: var(--foreground); font-size: 14px;") }}
+        {% if form.email.errors %}
+            {% for error in form.email.errors %}
+            <span style="font-size: 12px; color: var(--destructive); font-weight: 500; margin-top: 6px; display: block;"><i class="fas fa-exclamation-circle"></i> {{ error }}</span>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <div>
+        <label>Password</label>
+        {{ form.password(placeholder="••••••••", style="width: 100%; padding: 10px 14px; border: 1px solid var(--input); border-radius: var(--radius); background: var(--background); color: var(--foreground); font-size: 14px;") }}
+        {% if form.password.errors %}
+            {% for error in form.password.errors %}
+            <span style="font-size: 12px; color: var(--destructive); font-weight: 500; margin-top: 6px; display: block;"><i class="fas fa-exclamation-circle"></i> {{ error }}</span>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 12px; margin-top: 4px;">
+        Sign In
+    </button>
+</form>
+
+<div style="margin-top: 16px; text-align: center; font-size: 13px; color: var(--muted-foreground);">
+    New here? <a href="{{ url_for('auth.register') }}" style="color: var(--primary); text-decoration: none; font-weight: 500;">Create an account</a>
+</div>
+
+<div style="margin-top: 20px; border-top: 1px solid var(--border); padding-top: 14px; text-align: center;">
+    <a href="{{ url_for('auth.reset_admin') }}" style="font-size: 11px; color: var(--muted-foreground); text-decoration: none; font-weight: 400;">
+        <i class="fas fa-cog"></i> Admin Reset
+    </a>
+</div>
+{% endblock %}
